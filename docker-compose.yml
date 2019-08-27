@@ -1,0 +1,27 @@
+version: "3"
+services:
+  mongo:
+      container_name: mongo
+      image: mongo
+      volumes:
+        - ./data:/data/db
+      ports:
+        - "27017:27017"
+      networks:
+        - backend
+        
+  app:
+    container_name : app
+    restart: always
+    build: .
+    ports:
+      - "3000"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mongo:
