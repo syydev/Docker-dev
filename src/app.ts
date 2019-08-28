@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
 import mongo from "connect-mongo";
@@ -11,6 +11,11 @@ const MongoStore = mongo(session);
 // Route handlers
 import * as user from './routes/user';
 
+app.use(function (req: Request, res: Response, next: NextFunction) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 app.use('/users', user.router)
 
 // Connect to MongoDB
