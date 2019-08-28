@@ -9,18 +9,20 @@ const app = express();
 const MongoStore = mongo(session);
 
 // Route handlers
-import * as account from './routes/account';
+import * as user from './routes/user';
 
-app.use('/account', account.router)
+app.use('/users', user.router)
 
 // Connect to MongoDB
 mongoose.Promise = global.Promise;
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true }).then(
-  () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
-).catch(err => {
-  console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
-  process.exit();
-});
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
+  .then(() => {
+    console.log('Successfully connected to MongoDB.');
+  })
+  .catch(err => {
+    console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
+    process.exit();
+  });
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);
