@@ -5,36 +5,31 @@ const router = express.Router();
 
 // Login
 router.get('/:id', function (req: Request, res: Response) {
-  User.findOne({ 'id': req.params.id }, function (err, notice_dt) {
-    if (err) {
-      res.send(err);
-    }
-    else {
-      if (notice_dt == null) {
-        console.log('Cannot find the user information');
-      } else {
-        console.log(notice_dt);
-      }
-    }
+  User.findOne({ 'id': req.params.id }, function (err, result) {
+    if (err) res.status(500).send(err);
+    else res.status(200).send(result);
   });
 });
 
 // Sign Up
 router.post('/', function (req: Request, res: Response) {
-  User.create(req.body)
-    .then(user => {
-      console.log(user);
-      res.send(user);
-    })
+  User.create(req.body.data)
+    .then(user => res.status(200).send(user))
     .catch(err => res.status(500).send(err));
 });
 
 router.put('/:id', function (req: Request, res: Response) {
-
+  User.updateOne({ id: req.params.id }, { pw: req.body.data.pw }, function (err, result) {
+    if (err) res.status(500).send(err);
+    else res.status(200).send(result);
+  })
 });
 
 router.delete('/:id', function (req: Request, res: Response) {
-
+  User.deleteOne({ id: req.params.id }, function (err) {
+    if (err) res.status(500).send(err);
+    else res.status(200);
+  });
 });
 
 export { router };

@@ -8,16 +8,6 @@ import { MONGODB_URI, SESSION_SECRET } from './utils/env';
 const app = express();
 const MongoStore = mongo(session);
 
-// Route handlers
-import * as user from './routes/user';
-
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-app.use('/users', user.router)
-
 // Connect to MongoDB
 mongoose.Promise = global.Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
@@ -42,6 +32,16 @@ app.use(session({
     autoReconnect: true
   })
 }));
+app.use(function (req: Request, res: Response, next: NextFunction) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+// Route handlers
+import * as user from './routes/user';
+
+app.use('/users', user.router)
 
 // Start server
 app.listen(app.get('port'), () => {
