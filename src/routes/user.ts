@@ -3,7 +3,15 @@ import { User } from '../models/user';
 
 const router = express.Router();
 
-// Login
+// Get all users' data
+router.get('/', function (req: Request, res: Response) {
+  User.find({}, function (err, result) {
+    if (err) res.status(500).send(err);
+    else res.status(200).send(result);
+  });
+});
+
+// Get user's data
 router.get('/:id', function (req: Request, res: Response) {
   User.findOne({ 'id': req.params.id }, function (err, result) {
     if (err) res.status(500).send(err);

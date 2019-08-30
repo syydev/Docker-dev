@@ -35,13 +35,16 @@ app.use(session({
 app.use(function (req: Request, res: Response, next: NextFunction) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
 });
 
 // Route handlers
+import * as index from './routes/index';
 import * as user from './routes/user';
 
-app.use('/users', user.router)
+app.use('/', index.router);
+app.use('/users', user.router);
 
 // Start server
 app.listen(app.get('port'), () => {
