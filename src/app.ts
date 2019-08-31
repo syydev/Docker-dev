@@ -3,6 +3,8 @@ import session from "express-session";
 import bodyParser from "body-parser";
 import mongo from "connect-mongo";
 import mongoose from "mongoose";
+import moment from 'moment';
+import 'moment-timezone';
 import { MONGODB_URI, SESSION_SECRET } from './utils/env';
 
 const app = express();
@@ -39,12 +41,16 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next();
 });
 
+moment.tz.setDefault('Asia/Seoul')
+
 // Route handlers
 import * as index from './routes/index';
 import * as user from './routes/user';
+import * as item from './routes/item';
 
 app.use('/', index.router);
 app.use('/users', user.router);
+app.use('/items', item.router);
 
 // Start server
 app.listen(app.get('port'), () => {
