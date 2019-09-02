@@ -36,7 +36,7 @@ router.put('/:_id', function (req: Request, res: Response) {
 router.delete('/:_id', function (req: Request, res: Response) {
   Item.deleteOne({ _id: req.params._id }, function (err) {
     if (err) res.status(500).send(err);
-    else res.status(200);
+    else res.sendStatus(200);
   });
 });
 
