@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.26",
+    "moment-timezone": "^0.5.35",
     "mongoose": "^5.7.5",
     "nodemon": "^1.19.1",
     "source-map-support": "^0.5.13",
